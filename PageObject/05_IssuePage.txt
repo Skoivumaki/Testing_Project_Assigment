@@ -1,0 +1,68 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+# TODO: Write Precondition and Postcondition, Tags 
+
+Pre Condition	Open Browser
+				User must be logged in and have atleast 1 project
+Post Condition	Close all browsers
+Tags	CRUD, Issues, Create issue
+
+#******************* Common Variables ********************
+
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+# TODO: Write Issue creation field variables, Updated name of the issue
+
+IssuePageURL = https://gitlab.com/dashboard/issues
+IssueTitle = toimimaton
+NewIssueTitle = toimii
+IssueProjectPage = https://gitlab.com/{GroupName}/{ProjectName}/-/issues
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# TODO: Write Positive Test Cases and Test Process steps
+
+# Positive Test examples are below write test process steps for each below test case
+
+	Create issue,
+	Navigate To Project Create Page = IssuePageURL
+	Press "New issue in {any projectName}"
+		If unable to find "New issue button"
+			Press dropdown button next to issue button and select any project.
+	Input Title = IssueTitle
+	Press "Create issue"
+	Page should redirect to Issue page with IssueTitle as title.
+
+ 	Update name of issue, 
+	Navigate To Project Create Page = IssueProjectPage
+	Press any Issue on project
+	Press "Edit"
+	Input New title = NewIssueTitle
+	Press "Save changes"
+	Page should redirect to Issue page with NewIssueTitle as title.
+
+	Create second issue with privious updated name
+	Navigate To Project Create Page = IssuePageURL
+	Press "New issue in {any projectName}"
+		If unable to find "New issue button"
+			Press dropdown button next to issue button and select same project.
+	Input Title = NewIssueTitle
+	Press "Create issue"
+	Page should redirect to Issue page with NewIssueTitle as title.
+
+    Delete first issue
+	Navigate To Project Create Page = IssueProjectPage
+	Press issue with lowest number
+	Input Title = NewIssueTitle
+	Press the 3 dot dropdown menu and select "Delete issue"
+	Confirm and press "Delete issue"
+	Page should redirect to Issues page.
